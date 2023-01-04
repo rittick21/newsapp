@@ -12,7 +12,7 @@ export class Navbar extends Component {
         >
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
-              News-<strong style={{ color: "#0d6efd" }}>B</strong>ox
+            <img src="./favicon-32x32.png" alt="..." /> News-<strong style={{ color: "#0d6efd" }}>B</strong>ox
             </Link>
             <button
               className="navbar-toggler"
@@ -87,7 +87,7 @@ export class Navbar extends Component {
                   className="form-check-label"
                   htmlFor="flexSwitchCheckDefault"
                 >
-                  Enable Dark Mode
+                Dark Mode
                 </label>
               </div>
             </div>

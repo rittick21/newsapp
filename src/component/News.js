@@ -17,19 +17,19 @@ export class News extends Component {
     category: PropTypes.string
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       articles: [],
       loading: false,
       page: 1,
       totalResults: 0
     };
+    document.title = `News-Box-${this.capitalize(this.props.category)}`
   } //constructor calling
 
-  async componentDidMount() {
-    // console.log("Cdm");
-    let url =`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=98bbff13fb8649819b99ad5800585be1&page=1&pageSize=${this.props.pageSize}`;
+  async updatePage(){
+    let url =`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=98bbff13fb8649819b99ad5800585be1&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({loading: true});
     let data = await fetch(url);
     let parseData = await data.json();
@@ -38,44 +38,33 @@ export class News extends Component {
       totalResults: parseData.totalResults,
       loading: false
     });
+  }
+
+  async componentDidMount() {
+    this.updatePage();
   } //async function and componentDidMount is a cyclic method which is called after the call of the render() function
  
   //page is actual the property of the news api which counts the no. of pages and pageSize= no. of news/ pages
   handelPrevClick = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=98bbff13fb8649819b99ad5800585be1&page=${
-      this.state.page - 1
-    }&pageSize=${this.props.pageSize}`;
-    this.setState({loading: true});
-    let data = await fetch(url);
-    let parseData = await data.json();
-    this.setState({
-      page: this.state.page - 1,
-      articles: parseData.articles,
-      loading: false
-    });
+    this.setState({page: this.state.page-1});
+    this.updatePage();
   };
  //for changing the previous page
   handelNextClick = async () => {
-    if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / 20))) {
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=98bbff13fb8649819b99ad5800585be1&page=${
-        this.state.page + 1
-      }&pageSize=${this.props.pageSize}`;
-      this.setState({loading: true});
-      let data = await fetch(url);
-      let parseData = await data.json();
-      this.setState({
-        page: this.state.page + 1,
-        articles: parseData.articles,
-        loading: false
-      });
-    }
+    this.setState({page: this.state.page+1});
+    this.updatePage();
   };
  //for changing the next page
+
+capitalize=(string)=>{
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+// To capitalize a string
+
   render() {
-    // console.log("render")
     return (
       <div className="container my-3">
-        <h2 className={`text-center text-${this.props.mode=== 'light' ? 'dark': 'light'}`}>News-<strong style={{color: '#0d6efd'}}>B</strong>ox: Top headlines</h2>
+        <h2 className={`text-center text-${this.props.mode=== 'light' ? 'dark': 'light'}`}><img src="./favicon-32x32.png" alt="..." /> News-<strong style={{color: '#0d6efd'}}>B</strong>ox: Top {this.capitalize(this.props.category)} headlines</h2>
         <div className="row">
         {this.state.loading && <Spinner/>}
           {!this.state.loading && this.state.articles.map((element) => {
@@ -86,6 +75,9 @@ export class News extends Component {
                   description={element.description ? element.description : ""}
                   imageUrl={element.urlToImage}
                   newsUrl={element.url}
+                  author={element.author}
+                  date={element.publishedAt}
+                  source={element.source.name}
                 />
               </div>
             );
