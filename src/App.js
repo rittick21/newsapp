@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import Navbar from './component/Navbar';
 import News from './component/News';
 import PropTypes from 'prop-types';
+import LoadingBar from 'react-top-loading-bar';
 import {
   BrowserRouter as Router,
   Routes,
@@ -21,9 +22,11 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      mode: 'light'
+      mode: 'light',
+      progress: 0
     };
   } 
+
   toggleMode=()=>{
     if(this.state.mode==='light'){
       this.setState({mode: 'dark'});
@@ -33,19 +36,29 @@ export default class App extends Component {
       document.body.style.backgroundColor='white';
     }
   }
+
+  setProgress=(progress)=>{
+    this.setState({progress: progress})
+  }
   render() {
     return (
       <div>
       <Router>
       <Navbar toggleMode={this.toggleMode} mode={this.state.mode}/>
+      <LoadingBar
+        color='rgb(13, 110, 253)'
+        progress={this.state.progress}
+        height={3}
+        // onLoaderFinished={() => setProgress(0)}
+      />
       <Routes>
-        <Route exact path="/" element={<News mode={this.state.mode} key="general" pageSize = {20} country ="in" category ="general"/>}/>
-        <Route exact path="/business" element={<News mode={this.state.mode} key="business" pageSize = {20} country ="in" category ="business"/>}/>
-        <Route exact path="/sports" element={<News mode={this.state.mode} key="sports" pageSize = {20} country ="in" category ="sports"/>}/>
-        <Route exact path="/entertainment" element={<News mode={this.state.mode} key="entertainment" pageSize = {20} country ="in" category ="entertainment"/>}/>
-        <Route exact path="/health" element={<News mode={this.state.mode} key="health" pageSize = {20} country ="in" category ="health"/>}/>
-        <Route exact path="/science" element={<News mode={this.state.mode} key="science" pageSize = {20} country ="in" category ="science"/>}/>
-        <Route exact path="/technology" element={<News mode={this.state.mode} key="technology" pageSize = {20} country ="in" category ="technology"/>}/>
+        <Route exact path="/" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="general" pageSize = {20} country ="in" category ="general"/>}/>
+        <Route exact path="/business" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="business" pageSize = {20} country ="in" category ="business"/>}/>
+        <Route exact path="/sports" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="sports" pageSize = {20} country ="in" category ="sports"/>}/>
+        <Route exact path="/entertainment" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="entertainment" pageSize = {20} country ="in" category ="entertainment"/>}/>
+        <Route exact path="/health" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="health" pageSize = {20} country ="in" category ="health"/>}/>
+        <Route exact path="/science" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="science" pageSize = {20} country ="in" category ="science"/>}/>
+        <Route exact path="/technology" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="technology" pageSize = {20} country ="in" category ="technology"/>}/>
       </Routes>
       </Router>
       </div>

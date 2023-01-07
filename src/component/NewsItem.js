@@ -7,7 +7,9 @@ export class NewsItem extends Component {
     return (
       <div className="my-3">
         <div className="card" style={{ backgroundColor: "#dee2e6" }}>
-        <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger" style={{left: '85%', zIndex: '1', fontSize: '10px'}}>{source}<span className="visually-hidden">unread messages</span></span>
+        <div style={{display: 'flex', justifyContent: 'flex-end', position: 'absolute', right: '0'}}>
+        <span className="badge rounded-pill bg-danger">{source}</span>
+        </div>
           <img
             src={
               imageUrl ? imageUrl : "https://wallpapercave.com/wp/wp7342177.jpg"

@@ -1,7 +1,7 @@
 .center{
-    position: absolute;
-    top: 50%;
-    left: 47%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .center img{
     width: 2rem;

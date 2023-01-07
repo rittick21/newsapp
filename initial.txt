@@ -50,4 +50,62 @@
     });
     };
 
-    ************************************************
+    *******************Initial render() method when we used previous and next button but now we use infinite scrolling moderm approach************
+    render() {
+    return (
+      <div className="container my-3">
+        <h2 className={`text-center text-${this.props.mode=== 'light' ? 'dark': 'light'}`}><img src="./favicon-32x32.png" alt="..." /> News-<strong style={{color: '#0d6efd'}}>B</strong>ox: Top {this.capitalize(this.props.category)} headlines</h2>
+        <div className="row">
+        {this.state.loading && <Spinner/>}
+          {!this.state.loading && this.state.articles.map((element) => {
+            return (
+              <div className="col-md-4 my-2" key={element.url}>
+                <NewsItem
+                  title={element.title ? element.title : ""}
+                  description={element.description ? element.description : ""}
+                  imageUrl={element.urlToImage}
+                  newsUrl={element.url}
+                  author={element.author}
+                  date={element.publishedAt}
+                  source={element.source.name}
+                />
+              </div>
+            );
+          })}
+        </div>
+        <div className="container d-flex justify-content-between">
+          <button
+            type="button"
+            disabled={this.state.page <= 1}
+            className="btn btn-primary"
+            onClick={this.handelPrevClick}
+          >
+            &laquo;Previous
+          </button>
+          <button
+            type="button"
+            disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)}
+            className="btn btn-primary"
+            onClick={this.handelNextClick}
+          >
+            Next &raquo;
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  **********************To handel the previous and next click when we have to use the previous and next button**********************
+   handelPrevClick = async () => {
+    this.setState({ page: this.state.page - 1 });
+    this.updatePage();
+  };
+  //for changing the previous page
+
+   handelNextClick = async () => {
+    this.setState({ page: this.state.page + 1 });
+    this.updatePage();
+  };
+  //for changing the next page
+
+*******************************************************************
