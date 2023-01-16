@@ -12,8 +12,11 @@ import {
 } from 'react-router-dom';
 
 export default class App extends Component {
+  apiKey = process.env.REACT_APP_NEWS_API;
+  pageSize = 20;
   static defaultProps = {
     mode: 'light'
+
   }
   static propTypes = {
     mode: PropTypes.string
@@ -36,7 +39,6 @@ export default class App extends Component {
       document.body.style.backgroundColor='white';
     }
   }
-
   setProgress=(progress)=>{
     this.setState({progress: progress})
   }
@@ -52,13 +54,13 @@ export default class App extends Component {
         // onLoaderFinished={() => setProgress(0)}
       />
       <Routes>
-        <Route exact path="/" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="general" pageSize = {20} country ="in" category ="general"/>}/>
-        <Route exact path="/business" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="business" pageSize = {20} country ="in" category ="business"/>}/>
-        <Route exact path="/sports" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="sports" pageSize = {20} country ="in" category ="sports"/>}/>
-        <Route exact path="/entertainment" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="entertainment" pageSize = {20} country ="in" category ="entertainment"/>}/>
-        <Route exact path="/health" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="health" pageSize = {20} country ="in" category ="health"/>}/>
-        <Route exact path="/science" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="science" pageSize = {20} country ="in" category ="science"/>}/>
-        <Route exact path="/technology" element={<News setProgress ={this.setProgress}  mode={this.state.mode} key="technology" pageSize = {20} country ="in" category ="technology"/>}/>
+        <Route exact path="/" element={<News setProgress ={this.setProgress} apiKey={this.apiKey} mode={this.state.mode} key="general" pageSize = {this.pageSize} country ="in" category ="general"/>}/>
+        <Route exact path="/business" element={<News setProgress ={this.setProgress} apiKey={this.apiKey} mode={this.state.mode} key="business" pageSize = {this.pageSize} country ="in" category ="business"/>}/>
+        <Route exact path="/sports" element={<News setProgress ={this.setProgress} apiKey={this.apiKey} mode={this.state.mode} key="sports" pageSize = {this.pageSize} country ="in" category ="sports"/>}/>
+        <Route exact path="/entertainment" element={<News setProgress ={this.setProgress} apiKey={this.apiKey} mode={this.state.mode} key="entertainment" pageSize = {this.pageSize} country ="in" category ="entertainment"/>}/>
+        <Route exact path="/health" element={<News setProgress ={this.setProgress} apiKey={this.apiKey} mode={this.state.mode} key="health" pageSize = {this.pageSize} country ="in" category ="health"/>}/>
+        <Route exact path="/science" element={<News setProgress ={this.setProgress} apiKey={this.apiKey} mode={this.state.mode} key="science" pageSize = {this.pageSize} country ="in" category ="science"/>}/>
+        <Route exact path="/technology" element={<News setProgress ={this.setProgress} apiKey={this.apiKey} mode={this.state.mode} key="technology" pageSize = {this.pageSize} country ="in" category ="technology"/>}/>
       </Routes>
       </Router>
       </div>

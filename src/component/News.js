@@ -30,7 +30,7 @@ export class News extends Component {
 
   async updatePage(){
     this.props.setProgress(10);
-    let url =`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=98bbff13fb8649819b99ad5800585be1&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    let url =`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({loading: true});
     let data = await fetch(url);
     this.props.setProgress(30);
@@ -68,7 +68,7 @@ capitalize=(string)=>{
   render() {
     return (
       <div className="container my-3">
-        <h2 className={`text-center text-${this.props.mode=== 'light' ? 'dark': 'light'}`}><img src="./favicon-32x32.png" alt="..." /> News-<strong style={{color: '#0d6efd'}}>B</strong>ox: Top {this.capitalize(this.props.category)} headlines</h2>
+        <h2 className={`text-center text-${this.props.mode=== 'light' ? 'dark': 'light'}`} style={{marginTop: '90px'}}><img src="./favicon-32x32.png" alt="..." /> News-<strong style={{color: '#0d6efd'}}>B</strong>ox: Top {this.capitalize(this.props.category)} headlines</h2>
         <div className="row">
         {this.state.loading && <Spinner/>}
           {!this.state.loading && this.state.articles.map((element) => {
